@@ -1,14 +1,28 @@
 var contenido = document.querySelector('#contenido')
 
 function traer(){
-    fetch('https://randomuser.me/api/')
-    .then(res=>res.json())
-    .then(data => {
-        console.log(data.results['0'].email)
-        contenido.innerHTML = `
-        <img src="${data.results['0'].picture.large}" width="100px" class="img-fluid rounded-circle" >
-            <p>Nombre:${data.results['0'].name.last}</p>
+    fetch('tabla.json')
+        .then( res => res.json())
+        .then( datos => {
+          //  console.log(datos)
+          tabla(datos)
+        })
+}
+
+function tabla(datos){
+    //console.log(datos)
+    contenido.innerHTML = ``
+    for(let valor of datos){
+        //console.log(valor.nombre)
+        contenido.innerHTML +=`
+                     <tr>
+                        <th scope="row">${valor.id}</th>
+                        <td>${valor.nombre}</td>
+                        <td>${valor.email}</td>
+                        <td>${valor.estado ? "Active":"Eliminado"}</td>
+                    </tr>
         `
-    })
-        
+    }
+
+    
 }
